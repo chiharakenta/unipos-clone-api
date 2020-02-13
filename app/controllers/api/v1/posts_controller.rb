@@ -30,7 +30,7 @@ module Api
       private
 
       def post_params
-        params.require(:post).permit(:user_id, :message)
+        params.require(:post).permit(:user_id, :message, :introduced_user_id)
       end
 
     end
