@@ -8,7 +8,8 @@ module Api
       end
 
       def create
-        post = Post.new(post_params)
+        user = User.find(post_params[:user_id])
+        post = user.posts.build(post_params)
         if post.save
           render json: { status: 'SUCCESS', data: post }
         else
@@ -29,7 +30,7 @@ module Api
       private
 
       def post_params
-        params.require(:post).permit(:message)
+        params.require(:post).permit(:user_id, :message)
       end
 
     end
