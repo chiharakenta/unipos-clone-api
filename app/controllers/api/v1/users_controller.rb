@@ -9,6 +9,12 @@ module Api
 
       def show
         user = User.find(params[:id])
+        user = {
+          id: user.id,
+          name: user.name,
+          point: user.point.amount,
+          received_point: user.received_point.amount
+        };
         render json: { status: 'SUCCESS', data: user }
       end
 
