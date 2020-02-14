@@ -11,7 +11,8 @@ module Api
             id: post.id,
             message: post.message,
             introducing_user_name: post.user.name,
-            introduced_user_name: introduced_user_name
+            introduced_user_name: introduced_user_name,
+            claps: post.claps.count
           }
           new_posts.push(post)
         end
