@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  has_one :point, dependent: :destroy
+  has_one :received_point, dependent: :destroy
+
   has_many :posts, dependent: :destroy
   has_many :introducings, through: :posts, source: :introduced_user, dependent: :destroy
 
