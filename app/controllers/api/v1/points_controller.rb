@@ -3,6 +3,14 @@ module Api
     class PointsController < ApplicationController
       def create
         user = User.find(create_point_params[:user_id])
+
+        # 既にポイントのデータがある場合、そのデータを返す
+        if !user.point.nil?
+          render json: { status: 'SUCCESS. point is already exist', data: user.point }
+          return
+        end
+
+        # まだポイントなかった場合、作成してそのデータを返す
         point = user.build_point(amount: 100)
         if point.save
           render json: { status: 'SUCCESS', data: point }
