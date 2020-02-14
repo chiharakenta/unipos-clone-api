@@ -4,7 +4,18 @@ module Api
       
       def index
         posts = Post.order(created_at: :desc)
-        render json: { status: 'SUCCESS', data: posts }
+        new_posts = []
+        posts.each do |post|
+          introduced_user_name = User.find(post.introduced_user_id).name
+          post = {
+            id: post.id,
+            message: post.message,
+            introducing_user_name: post.user.name,
+            introduced_user_name: introduced_user_name
+          }
+          new_posts.push(post)
+        end
+        render json: { status: 'SUCCESS', data: new_posts }
       end
 
       def create
