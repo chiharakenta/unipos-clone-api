@@ -5,3 +5,21 @@
 
 ## 仕様
 https://chiharakenta.github.io/unipos-clone_api-document/
+
+## セットアップ手順
+
+```
+$ git clone https://github.com/chiharakenta/unipos-clone-api.git
+```
+
+```
+$ cd unipos-clone-api
+```
+
+```
+$ bundle install --path vendor/bundle
+```
+
+```
+$ rails s
+```
