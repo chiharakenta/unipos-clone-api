@@ -28,6 +28,15 @@ module Api
         end
       end
 
+      def decrease
+        user = User.find(decrease_point_params[:user_id])
+        if user.point_decrease(decrease_point_params[:point])
+          render json: { status: 'SUCCESS', data: user.point }
+        else
+          render json: { status: 'ERRORS', data: user.point.errors }
+        end
+      end
+
       private
 
       def create_point_params
@@ -36,6 +45,10 @@ module Api
 
       def update_point_params
         params.require(:point).permit(:amount)
+      end
+      
+      def decrease_point_params
+        params.permit(:user_id, :point)
       end
     end
   end

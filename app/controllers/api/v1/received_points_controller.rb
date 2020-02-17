@@ -19,11 +19,29 @@ module Api
       end
 
       def update
-        received_point = ReceivedPoint.find(params[:id])
-        if received_point.update(amount: update_received_point_params[:amount])
+        user = User.find(update_received_point_params[:user_id])
+        if user.received_point.update(amount: update_received_point_params[:amount_change])
           render json: { status: 'SUCCESS', data: received_point }
         else
           render json: { status: 'ERRORS', data: received_point.errors }
+        end
+      end
+
+      def decrease
+        user = User.find(decrease_point_params[:user_id])
+        if user.point_decrease(decrease_point_params[:point])
+          render json: { status: 'SUCCESS', data: user.point }
+        else
+          render json: { status: 'ERRORS', data: user.point.errors }
+        end
+      end
+
+      def increase
+        user = User.find(increase_point_params[:user_id])
+        if user.received_point_increase(increase_point_params[:point])
+          render json: { status: 'SUCCESS', data: user.received_point }
+        else
+          render json: { status: 'ERRORS', data: user.received_point.errors }
         end
       end
 
@@ -34,7 +52,11 @@ module Api
       end
 
       def update_received_point_params
-        params.require(:received_point).permit(:amount)
+        params.require(:received_point).permit(:user_id, :amount_change, :type)
+      end
+
+      def increase_point_params
+        params.permit(:user_id, :point)
       end
     end
   end
